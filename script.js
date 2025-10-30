@@ -18,12 +18,11 @@ function formatFrete(valor) {
 function gerarTexto() {
   const get = id => document.getElementById(id).value;
 
-  const origemDestino = `${get("cidadeOrigem").toUpperCase()} ${get("ufOrigem").toUpperCase()} X ${get("cidadeDestino").toUpperCase()} ${get("ufDestino").toUpperCase()}`;
-  const coleta = `${get("dataColeta")} – ${get("horaColeta")}`;
+const origemDestino = `${get("cidadeOrigem").toUpperCase()}/${get("ufOrigem").toUpperCase()} X ${get("cidadeDestino").toUpperCase()}/${get("ufDestino").toUpperCase()}`;  const coleta = `${get("dataColeta")} – ${get("horaColeta")}`;
   const entrega = `${get("dataEntrega")} – ${get("horaEntrega")}`;
   const frete = formatFrete(get("frete"));
   const telefoneMoto = formatTelefone(get("telefoneMoto"));
-  const telefoneResp = formatTelefone(get("telefoneResp"));
+  const telefoneResp = get("telefoneResp") ? ` // ${formatTelefone(get("telefoneResp"))} (RESP)` : "";
   const pix = `${get("tipoPix")}: ${get("chavePix")}`;
   const cadastro = `OPENTECH: ${get("opentech")} / BRK: ${get("brk")}`;
 
@@ -36,7 +35,7 @@ ENTREGA: ${entrega}
 FRETE: ${frete}
 MOTORISTA: ${get("motorista")}
 CPF: ${formatCPF(get("cpf"))}
-TELEFONE: ${telefoneMoto} (MOTO) // ${telefoneResp} (RESP)
+TELEFONE: ${telefoneMoto} (MOTO)${telefoneResp}
 PAGAMENTO: 80/20 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)
 PIX: ${pix}
 PLACA: ${get("placa")}
@@ -55,15 +54,46 @@ COTAÇÃO: ${get("cotacao")}
 COLETA: ${get("coletaId")}
 
 ${get("regras")}
-  `;
-  document.getElementById("resultado").textContent = texto.trim();
+  `.trim();
+
+  document.getElementById("resultado").textContent = texto;
 }
 
 function copiarTexto() {
-  const resultado = document.getElementById("resultado").textContent;
-  if (!resultado) {
-    alert("Nenhum texto gerado para copiar.");
+  const texto = document.getElementById("resultado").textContent;
+  if (!texto) {
+    alert("Gere o texto antes de copiar.");
     return;
   }
-  navigator.clipboard.writeText(resultado).then(() => {
-    alert
+  navigator.clipboard.writeText(texto).then(() => {
+    alert("Texto copiado com sucesso!");
+  }).catch(() => {
+    alert("Erro ao copiar o texto.");
+  });
+}
+
+function novaCarga() {
+  const campos = document.querySelectorAll("input, textarea, select");
+  campos.forEach(campo => {
+    switch (campo.id) {
+      case "tecnologia":
+        campo.value = "NÃO AUTOMÁTICO";
+        break;
+      case "obs":
+        campo.value = "--";
+        break;
+      case "regras":
+        campo.value = `*=> Proibido abandonar o veículo em local não autorizado pelo Monitoramento;
+*=> Proibido parar em postos/locais não homologados pela Opentech;
+-- Valor da diária…`;
+        break;
+      case "opentech":
+      case "brk":
+        campo.value = "0";
+        break;
+      default:
+        campo.value = "";
+    }
+  });
+  document.getElementById("resultado").textContent = "";
+}
