@@ -25,11 +25,6 @@ input, textarea, select {
   color: #f0f0f0;
 }
 
-textarea[readonly] {
-  background-color: #111;
-  color: #aaa;
-}
-
 .linha {
   display: flex;
   gap: 10px;
