@@ -1,95 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro de Carga</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Cadastro de Carga</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Cadastro de Carga</h2>
+    <h2>Cadastro de Carga</h2>
 
-  <form id="formulario">
-    <div class="linha quatro-colunas">
-      <input type="text" id="cidadeOrigem" placeholder="Cidade Origem">
-      <input type="text" id="ufOrigem" placeholder="UF Origem">
-      <input type="text" id="cidadeDestino" placeholder="Cidade Destino">
-      <input type="text" id="ufDestino" placeholder="UF Destino">
-    </div>
+    <form id="formulario">
+        <div class="linha duas-colunas"> 
+            <input type="text" id="cidadeOrigem" placeholder="Cidade e UF Origem (Ex: SAO PAULO/SP)">
+            <input type="text" id="cidadeDestino" placeholder="Cidade e UF Destino (Ex: RIO DE JANEIRO/RJ)">
+        </div>
 
-    <div class="linha quatro-colunas">
-      <input type="text" id="dataColeta" placeholder="Data Coleta">
-      <input type="text" id="horaColeta" placeholder="Hora Coleta">
-      <input type="text" id="dataEntrega" placeholder="Data Entrega">
-      <input type="text" id="horaEntrega" placeholder="Hora Entrega">
-    </div>
+        <div class="linha quatro-colunas">
+            <input type="text" id="dataColeta" placeholder="Data Coleta (Ex: 301025)">
+            <input type="text" id="horaColeta" placeholder="Hora Coleta (Ex: 1200)">
+            <input type="text" id="dataEntrega" placeholder="Data Entrega (Ex: 311025)">
+            <input type="text" id="horaEntrega" placeholder="Hora Entrega (Ex: 1800)">
+        </div>
 
-    <div class="linha duas-colunas">
-        <input type="text" id="frete" placeholder="Valor do Frete">
-        <input type="text" id="motorista" placeholder="Nome do Motorista">
-    </div>
-    
-    <div class="linha tres-colunas">
-      <input type="text" id="cpf" placeholder="CPF do Motorista">
-      <input type="text" id="telefoneMoto" placeholder="Telefone Motorista">
-      <input type="text" id="telefoneResp" placeholder="Telefone Responsável">
-    </div>
+        <div class="linha duas-colunas">
+            <input type="text" id="frete" placeholder="Valor do Frete">
+            <input type="text" id="motorista" placeholder="Nome do Motorista">
+        </div>
+        
+        <div class="linha tres-colunas">
+            <input type="text" id="cpf" placeholder="CPF do Motorista">
+            <input type="text" id="telefoneMoto" placeholder="Telefone Motorista">
+            <input type="text" id="telefoneResp" placeholder="Telefone Responsável">
+        </div>
 
-    <div class="fixo">PAGAMENTO: 80/20 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)</div>
-    <div class="linha duas-colunas">
-    <select id="tipoPix">
-        <option value="" disabled selected>Tipo de Chave PIX</option>
-        <option value="EMAIL">EMAIL</option>
-        <option value="CELULAR">CELULAR</option>
-        <option value="CPF/CNPJ">CPF/CNPJ</option>
-    </select>
-    <input type="text" id="chavePix" placeholder="Chave PIX">
-</div>
- 
-    <div class="linha duas-colunas">
-        <input type="text" id="placa" placeholder="Placas">
-        <input type="text" id="cliente" placeholder="Cliente">
-    </div>
+        <div class="linha uma-coluna">
+            <select id="opcoesPagamento">
+                <option value="PAGAMENTO: 80/20 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)" selected>
+                    PAGAMENTO: 80/20 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)
+                </option>
+                <option value="PAGAMENTO: 70/30 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)">
+                    PAGAMENTO: 70/30 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)
+                </option>
+                <option value="PAGAMENTO: 90/10 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)">
+                    PAGAMENTO: 90/10 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)
+                </option>
+                <option value="PAGAMENTO: SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)">
+                    PAGAMENTO: SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)
+                </option>
+            </select>
+        </div>
+        
+        <div class="linha duas-colunas">
+            <select id="tipoPix">
+                <option value="" disabled selected>Tipo de Chave PIX</option>
+                <option value="EMAIL">EMAIL</option>
+                <option value="CELULAR">CELULAR</option>
+                <option value="CPF/CNPJ">CPF/CNPJ</option>
+            </select>
+            <input type="text" id="chavePix" placeholder="Chave PIX">
+        </div>
 
-    <div class="linha duas-colunas">
-      <input type="text" id="rastreador" placeholder="Rastreador">
-      <input type="text" id="tecnologia" placeholder="2ª Tecnologia?">
-    </div>
-    
-    <div class="linha tres-colunas">
-      <input type="text" id="tipologia" placeholder="Tipologia">
-      <input type="text" id="peso" placeholder="Peso">
-      <input type="text" id="status" placeholder="Status">
-    </div>
+        <div class="linha duas-colunas">
+            <input type="text" id="placa" placeholder="Placas">
+            <input type="text" id="cliente" placeholder="Cliente">
+        </div>
 
-    <div class="linha duas-colunas">
-      <input type="number" id="opentech" placeholder="Viagens Opentech"> 
-      <input type="number" id="brk" placeholder="Viagens BRK"> 
-    </div>
+        <div class="linha duas-colunas">
+            <input type="text" id="rastreador" placeholder="Rastreador">
+            <input type="text" id="tecnologia" placeholder="2ª Tecnologia?">
+        </div>
+        
+        <div class="linha tres-colunas">
+            <input type="text" id="tipologia" placeholder="Tipologia">
+            <input type="text" id="peso" placeholder="Peso">
+            <input type="text" id="status" placeholder="Status">
+        </div>
 
-    <div class="linha quatro-colunas">
-      <input type="text" id="dt" placeholder="DT">
-      <input type="text" id="captacao" placeholder="Captação">
-      <input type="text" id="cotacao" placeholder="Cotação">
-      <input type="text" id="coletaId" placeholder="Coleta ID">
-    </div>
+        <div class="linha duas-colunas">
+            <input type="number" id="opentech" placeholder="Viagens Opentech"> 
+            <input type="number" id="brk" placeholder="Viagens BRK"> 
+        </div>
 
-    <div class="linha duas-colunas">
-      <textarea id="obs" placeholder="OBS:"></textarea>
-      <textarea id="regras" placeholder="REGRAS:">*=> Proibido abandonar o veículo em local não autorizado pelo Monitoramento;
+        <div class="linha quatro-colunas">
+            <input type="text" id="dt" placeholder="DT">
+            <input type="text" id="captacao" placeholder="Captação">
+            <input type="text" id="cotacao" placeholder="Cotação">
+            <input type="text" id="coletaId" placeholder="Coleta ID">
+        </div>
+
+        <div class="linha duas-colunas">
+            <textarea id="obs" placeholder="OBS:"></textarea>
+            <textarea id="regras" placeholder="REGRAS:">*=> Proibido abandonar o veículo em local não autorizado pelo Monitoramento;
 *=> Proibido parar em postos/locais não homologados pela Opentech;
 -- Valor da diária…</textarea>
-    </div>
+        </div>
 
-    <div class="botoes">
-      <button type="button" onclick="gerarTexto()">Gerar Bloco Formatado</button>
-      <button type="button" onclick="copiarTexto()">Copiar Texto</button>
-      <button type="button" onclick="novaCarga()">Nova Carga</button>
-    </div>
-  </form>
+        <div class="botoes">
+            <button type="button" onclick="gerarTexto()">Gerar Bloco Formatado</button>
+            <button type="button" onclick="copiarTexto()">Copiar Texto</button>
+            <button type="button" onclick="novaCarga()">Nova Carga</button>
+        </div>
+    </form>
 
-  <div id="resultado"></div>
+    <div id="resultado"></div>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
