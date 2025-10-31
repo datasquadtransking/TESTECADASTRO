@@ -35,16 +35,16 @@
     </div>
 
     <div class="fixo">PAGAMENTO: 80/20 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)</div>
-
     <div class="linha duas-colunas">
-      <select id="tipoPix">
+    <select id="tipoPix">
+        <option value="" disabled selected>Tipo de Chave PIX</option>
         <option value="EMAIL">EMAIL</option>
         <option value="CELULAR">CELULAR</option>
         <option value="CPF/CNPJ">CPF/CNPJ</option>
-      </select>
-      <input type="text" id="chavePix" placeholder="Chave PIX">
-    </div>
-
+    </select>
+    <input type="text" id="chavePix" placeholder="Chave PIX">
+</div>
+ 
     <div class="linha duas-colunas">
         <input type="text" id="placa" placeholder="Placas">
         <input type="text" id="cliente" placeholder="Cliente">
@@ -92,3 +92,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
