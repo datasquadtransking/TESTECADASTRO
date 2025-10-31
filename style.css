@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  margin: 10px 20px; 
   background-color: #000;
   color: #f0f0f0;
 }
@@ -11,53 +11,72 @@ h2 {
   background: linear-gradient(to right, #0A2356, #A52B3D);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-input, textarea, select {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  font-size: 14px;
+input, select {
+  margin-bottom: 8px; 
+  padding: 6px 8px; 
+  font-size: 13px;
   border: 1px solid #444;
   border-radius: 4px;
   background-color: #111;
   color: #f0f0f0;
+  height: 35px;
+  box-sizing: border-box;
+  width: 100%; /* Garantir que o input dentro do flex ocupe o espaço */
 }
+
+textarea {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 6px 8px;
+    font-size: 13px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #111;
+    color: #f0f0f0;
+    height: 70px;
+    box-sizing: border-box;
+    resize: none; 
+}
+
 
 .linha {
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px; 
+  margin-bottom: 8px; 
 }
 
-.linha input, .linha select {
-  flex: 1;
+.linha input, .linha select, .linha textarea {
+  flex: 1; /* Distribui o espaço igualmente dentro da linha */
 }
 
 .fixo {
   background-color: #111;
   border: 1px solid #444;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 14px;
+  padding: 8px; 
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-align: center; 
 }
 
 .botoes {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-top: 5px;
   flex-wrap: wrap;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 8px 15px; 
   font-weight: bold;
   background: linear-gradient(to right, #0A2356, #A52B3D);
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 13px; 
 }
 
 button:hover {
@@ -65,10 +84,10 @@ button:hover {
 }
 
 #resultado {
-  margin-top: 20px;
+  margin-top: 15px;
   white-space: pre-wrap;
   background: #111;
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #444;
   font-family: monospace;
   color: #f0f0f0;
