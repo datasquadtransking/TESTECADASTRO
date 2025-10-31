@@ -1,6 +1,6 @@
 function formatCPF(cpf) {
   return cpf.replace(/\D/g, '')
-            .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+             .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 }
 
 function formatTelefone(tel) {
@@ -18,11 +18,16 @@ function formatFrete(valor) {
 function gerarTexto() {
   const get = id => document.getElementById(id).value;
 
-const origemDestino = `${get("cidadeOrigem").toUpperCase()}/${get("ufOrigem").toUpperCase()} X ${get("cidadeDestino").toUpperCase()}/${get("ufDestino").toUpperCase()}`;  const coleta = `${get("dataColeta")} – ${get("horaColeta")}`;
+  const origemDestino = `${get("cidadeOrigem").toUpperCase()}/${get("ufOrigem").toUpperCase()} X ${get("cidadeDestino").toUpperCase()}/${get("ufDestino").toUpperCase()}`; 
+  const coleta = `${get("dataColeta")} – ${get("horaColeta")}`;
   const entrega = `${get("dataEntrega")} – ${get("horaEntrega")}`;
   const frete = formatFrete(get("frete"));
   const telefoneMoto = formatTelefone(get("telefoneMoto"));
-  const telefoneResp = get("telefoneResp") ? ` // ${formatTelefone(get("telefoneResp"))} (RESP)` : "";
+  
+  // Lógica para Telefone Responsável: verifica se há conteúdo útil.
+  const telefoneRespValor = get("telefoneResp").trim();
+  const telefoneResp = telefoneRespValor ? ` // ${formatTelefone(telefoneRespValor)} (RESP)` : "";
+  
   const pix = `${get("tipoPix")}: ${get("chavePix")}`;
   const cadastro = `OPENTECH: ${get("opentech")} / BRK: ${get("brk")}`;
 
@@ -46,7 +51,7 @@ TIPOLOGIA: ${get("tipologia")}
 PESO: ${get("peso")}
 STATUS: ${get("status")}
 CADASTRO: ${cadastro}
-OBS.: ${get("obs")}
+OBS.: ${get("obs").trim() === '--' || get("obs").trim() === '' ? 'SEM OBSERVAÇÕES' : get("obs")}
 
 DT: ${get("dt")}
 CAPTAÇÃO: ${get("captacao")}
@@ -77,10 +82,10 @@ function novaCarga() {
   campos.forEach(campo => {
     switch (campo.id) {
       case "tecnologia":
-        campo.value = "NÃO AUTOMÁTICO";
+        campo.value = "NÃO";
         break;
       case "obs":
-        campo.value = "--";
+        campo.value = "";
         break;
       case "regras":
         campo.value = `*=> Proibido abandonar o veículo em local não autorizado pelo Monitoramento;
