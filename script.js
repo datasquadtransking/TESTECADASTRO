@@ -4,7 +4,7 @@ function formatCPF(cpf) {
               .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 }
 
-// Função para formatar o Telefone
+// Função para formatar o Telefone para exibição (XX) 9XXXX-XXXX
 function formatTelefone(tel) {
     const nums = tel.replace(/\D/g, '');
     if (nums.length === 11) {
@@ -18,7 +18,7 @@ function formatFrete(valor) {
     return valor.includes('R$') ? valor : `R$ ${valor}`;
 }
 
-// NOVO: Função para formatar data (DDMM ou DDMMYY) para DD/MM ou DD/MM/YY
+// Função para formatar data (DDMM ou DDMMYY) para DD/MM ou DD/MM/YY
 function formatData(data) {
     const nums = data.replace(/\D/g, '');
     if (nums.length === 4) {
@@ -26,39 +26,51 @@ function formatData(data) {
     } else if (nums.length === 6) {
         return `${nums.slice(0, 2)}/${nums.slice(2, 4)}/${nums.slice(4, 6)}`;
     }
-    return data; // Retorna o original se não tiver 4 ou 6 dígitos
+    return data;
 }
 
-// NOVO: Função para formatar hora (HHMM) para HH:MM
+// Função para formatar hora (HHMM) para HH:MM
 function formatHora(hora) {
     const nums = hora.replace(/\D/g, '');
     if (nums.length === 4) {
         return `${nums.slice(0, 2)}:${nums.slice(2, 4)}`;
     }
-    return hora; // Retorna o original se não tiver 4 dígitos
+    return hora;
 }
 
+// NOVO: Função auxiliar para preparar o número para o link do WhatsApp (55DDDNUMERO)
+function formatarTelefoneParaLink(tel) {
+    // Remove tudo que não for dígito.
+    let nums = tel.replace(/\D/g, '');
+    
+    // Adiciona o código do país (55) se o número tiver 10 (apenas DDD + 8/9 dígitos) ou 11 (apenas DDD + 9 dígitos)
+    if (nums.length === 11 || nums.length === 10) { 
+        nums = "55" + nums;
+    } 
+    
+    return nums;
+}
+
+// ** FUNÇÃO PRINCIPAL PARA GERAR O TEXTO **
 function gerarTexto() {
     const get = id => document.getElementById(id).value;
 
-    // REMOÇÃO DO CAMPO UF E AJUSTE DA VARIÁVEL
     const origemDestino = `${get("cidadeOrigem").toUpperCase()} X ${get("cidadeDestino").toUpperCase()}`; 
     
-    // NOVO: APLICA AS FUNÇÕES DE FORMATAÇÃO DE DATA E HORA
+    // Aplica as funções de formatação de data e hora
     const coleta = `${formatData(get("dataColeta"))} – ${formatHora(get("horaColeta"))}`;
     const entrega = `${formatData(get("dataEntrega"))} – ${formatHora(get("horaEntrega"))}`;
     
     const frete = formatFrete(get("frete"));
     const telefoneMoto = formatTelefone(get("telefoneMoto"));
     
-    // Lógica para Telefone Responsável: verifica se há conteúdo útil.
+    // Lógica para Telefone Responsável
     const telefoneRespValor = get("telefoneResp").trim();
     const telefoneResp = telefoneRespValor ? ` // ${formatTelefone(telefoneRespValor)} (RESP)` : "";
     
     const pix = `${get("tipoPix")}: ${get("chavePix")}`;
     const cadastro = `OPENTECH: ${get("opentech")} / BRK: ${get("brk")}`;
     
-    // NOVO: OBTÉM A OPÇÃO SELECIONADA PARA PAGAMENTO
     const opcoesPagamento = get("opcoesPagamento");
 
     const texto = `
@@ -91,10 +103,43 @@ COLETA: ${get("coletaId")}
 ${get("regras")}
     `.trim();
 
+    // Atualiza a área de resultado para que o enviarWhatsapp possa usar o texto
     document.getElementById("resultado").textContent = texto;
 }
 
+// ** NOVO: FUNÇÃO PARA ENVIAR WHATSAPP **
+function enviarWhatsapp() {
+    // Chama gerarTexto para garantir que o texto na área de resultado está atualizado
+    gerarTexto(); 
+    
+    const textoGerado = document.getElementById("resultado").textContent;
+    const telefoneMotoristaCampo = document.getElementById("telefoneMoto").value;
+
+    if (!textoGerado) {
+        alert("Gere o texto antes de enviar para o WhatsApp.");
+        return;
+    }
+    
+    if (!telefoneMotoristaCampo.replace(/\D/g, '')) {
+        alert("O campo de Telefone do Motorista está vazio ou inválido. Não é possível enviar o WhatsApp.");
+        return;
+    }
+
+    // Formata o telefone para o link (55DDDNUMERO)
+    const telefoneLink = formatarTelefoneParaLink(telefoneMotoristaCampo);
+    
+    // Codifica o texto para URL (quebras de linha viram %0A)
+    const textoFormatado = encodeURIComponent(textoGerado);
+    
+    // Cria o link do WhatsApp
+    const linkWhatsapp = `https://wa.me/${telefoneLink}?text=${textoFormatado}`;
+    
+    // Abre em uma nova aba para o WhatsApp
+    window.open(linkWhatsapp, '_blank');
+}
+
 function copiarTexto() {
+    // ... (restante do código da função copiarTexto)
     const texto = document.getElementById("resultado").textContent;
     if (!texto) {
         alert("Gere o texto antes de copiar.");
@@ -108,10 +153,11 @@ function copiarTexto() {
 }
 
 function novaCarga() {
+    // ... (restante do código da função novaCarga)
     const campos = document.querySelectorAll("input, textarea, select");
     campos.forEach(campo => {
         switch (campo.id) {
-            case "opcoesPagamento": // NOVO: Reseta para a opção padrão
+            case "opcoesPagamento": 
                 campo.value = "PAGAMENTO: 80/20 - SALDO APÓS A CHEGADA DOS COMPROVANTES NA TRANSKING (PAGAMENTO TODA SEGUNDA-FEIRA)";
                 break;
             case "tipoPix":
