@@ -40,16 +40,20 @@ function formatHora(hora) {
 
 // NOVO: Função auxiliar para preparar o número para o link do WhatsApp (55DDDNUMERO)
 function formatarTelefoneParaLink(tel) {
-    // Remove tudo que não for dígito.
     let nums = tel.replace(/\D/g, '');
-    
-    // Adiciona o código do país (55) se o número tiver 10 (apenas DDD + 8/9 dígitos) ou 11 (apenas DDD + 9 dígitos)
     if (nums.length === 11 || nums.length === 10) { 
         nums = "55" + nums;
-    } 
-    
+    }
     return nums;
 }
+
+// 🔴 NOVO AVISO EM CAIXA ALTA – APP TIMEMARK
+const avisoTimemark = `
+ATENÇÃO MOTORISTA: É OBRIGATÓRIO BAIXAR O APLICATIVO TIMEMARK PARA REGISTRAR O HORÁRIO DE CHEGADA NA COLETA E NA ENTREGA E ENVIAR O PRINT PARA O ANALISTA DE MONITORAMENTO.
+
+📱 IOS: https://apps.apple.com/br/app/timemark-timestamp-camera-gps/id6446071834
+📱 ANDROID: https://play.google.com/store/apps/details?id=com.oceangalaxy.camera.new
+`;
 
 // ** FUNÇÃO PRINCIPAL PARA GERAR O TEXTO **
 function gerarTexto() {
@@ -57,14 +61,12 @@ function gerarTexto() {
 
     const origemDestino = `${get("cidadeOrigem").toUpperCase()} X ${get("cidadeDestino").toUpperCase()}`; 
     
-    // Aplica as funções de formatação de data e hora
     const coleta = `${formatData(get("dataColeta"))} – ${formatHora(get("horaColeta"))}`;
     const entrega = `${formatData(get("dataEntrega"))} – ${formatHora(get("horaEntrega"))}`;
     
     const frete = formatFrete(get("frete"));
     const telefoneMoto = formatTelefone(get("telefoneMoto"));
     
-    // Lógica para Telefone Responsável
     const telefoneRespValor = get("telefoneResp").trim();
     const telefoneResp = telefoneRespValor ? ` // ${formatTelefone(telefoneRespValor)} (RESP)` : "";
     
@@ -100,16 +102,16 @@ CAPTAÇÃO: ${get("captacao")}
 COTAÇÃO: ${get("cotacao")}
 COLETA: ${get("coletaId")}
 
+${avisoTimemark}
+
 ${get("regras")}
     `.trim();
 
-    // Atualiza a área de resultado para que o enviarWhatsapp possa usar o texto
     document.getElementById("resultado").textContent = texto;
 }
 
-// ** NOVO: FUNÇÃO PARA ENVIAR WHATSAPP **
+// ** FUNÇÃO PARA ENVIAR WHATSAPP **
 function enviarWhatsapp() {
-    // Chama gerarTexto para garantir que o texto na área de resultado está atualizado
     gerarTexto(); 
     
     const textoGerado = document.getElementById("resultado").textContent;
@@ -121,25 +123,18 @@ function enviarWhatsapp() {
     }
     
     if (!telefoneMotoristaCampo.replace(/\D/g, '')) {
-        alert("O campo de Telefone do Motorista está vazio ou inválido. Não é possível enviar o WhatsApp.");
+        alert("O campo de Telefone do Motorista está vazio ou inválido.");
         return;
     }
 
-    // Formata o telefone para o link (55DDDNUMERO)
     const telefoneLink = formatarTelefoneParaLink(telefoneMotoristaCampo);
-    
-    // Codifica o texto para URL (quebras de linha viram %0A)
     const textoFormatado = encodeURIComponent(textoGerado);
-    
-    // Cria o link do WhatsApp
     const linkWhatsapp = `https://wa.me/${telefoneLink}?text=${textoFormatado}`;
     
-    // Abre em uma nova aba para o WhatsApp
     window.open(linkWhatsapp, '_blank');
 }
 
 function copiarTexto() {
-    // ... (restante do código da função copiarTexto)
     const texto = document.getElementById("resultado").textContent;
     if (!texto) {
         alert("Gere o texto antes de copiar.");
@@ -153,7 +148,6 @@ function copiarTexto() {
 }
 
 function novaCarga() {
-    // ... (restante do código da função novaCarga)
     const campos = document.querySelectorAll("input, textarea, select");
     campos.forEach(campo => {
         switch (campo.id) {
