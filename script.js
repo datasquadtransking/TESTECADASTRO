@@ -49,8 +49,7 @@ function formatarTelefoneParaLink(tel) {
 
 // 🔴 NOVO AVISO EM CAIXA ALTA – APP TIMEMARK
 const avisoTimemark = `
-ATENÇÃO MOTORISTA: É OBRIGATÓRIO BAIXAR O APLICATIVO TIMEMARK PARA REGISTRAR O HORÁRIO DE CHEGADA NA COLETA E NA ENTREGA E ENVIAR O PRINT PARA O ANALISTA DE MONITORAMENTO.
-
+ATENÇÃO MOTORISTA: É OBRIGATÓRIO BAIXAR O APLICATIVO ABAIXO PARA REGISTRAR O HORÁRIO DE CHEGADA NA COLETA E NA ENTREGA E ENVIAR PARA O ANALISTA DE MONITORAMENTO.
 📱 IOS: https://apps.apple.com/br/app/timemark-timestamp-camera-gps/id6446071834
 📱 ANDROID: https://play.google.com/store/apps/details?id=com.oceangalaxy.camera.new
 `;
@@ -178,3 +177,4 @@ function novaCarga() {
     });
     document.getElementById("resultado").textContent = "";
 }
+
